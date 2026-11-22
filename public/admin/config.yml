@@ -1,0 +1,75 @@
+# Decap CMS configuration: https://decapcms.org/docs/configuration-options/
+# Each save commits to the repo, and the GitHub Pages workflow rebuilds the site.
+
+backend:
+  name: github
+  repo: recxtlc/gwadlas-app
+  branch: main
+  # GitHub sign-in needs a small OAuth helper (see README, "Editing in the browser").
+  base_url: https://YOUR-OAUTH-HELPER.example.com
+  commit_messages:
+    update: "Update {{collection}} “{{slug}}”"
+    uploadMedia: "Upload “{{path}}”"
+    deleteMedia: "Delete “{{path}}”"
+
+# Lets you try the editor locally: run `npx decap-server` next to `npm run dev`,
+# then open http://localhost:4321/admin/
+local_backend: true
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: content
+    label: Website content
+    files:
+      - name: gallery
+        label: Gallery
+        file: src/content/gallery.json
+        format: json
+        fields:
+          - { name: title, label: Page title, widget: string }
+          - { name: intro, label: Intro, widget: text }
+          - { name: categories, label: Filter categories (keep "All" first), widget: list }
+          - name: pieces
+            label: Pieces
+            label_singular: Piece
+            widget: list
+            summary: "{{fields.title}} · {{fields.category}} · {{fields.year}}"
+            fields:
+              - { name: title, label: Title, widget: string }
+              - name: photo
+                label: Photo
+                widget: image
+                hint: Portrait photos look best. Keep files under about 500 KB.
+              - name: category
+                label: Category
+                widget: select
+                options: [Traditional, Eveningwear, Daywear, Menswear]
+              - { name: year, label: Year, widget: string }
+              - { name: price, label: Starting price, widget: string, hint: "For example R 12,500" }
+              - { name: cloth, label: Cloth, widget: string }
+              - { name: fittings, label: Fittings, widget: number, value_type: int, min: 1 }
+              - { name: hours, label: Hours of work, widget: number, value_type: int, min: 1 }
+              - { name: story, label: Story, widget: text }
+              - name: height
+                label: Tile height on the gallery (px)
+                widget: number
+                value_type: int
+                default: 420
+                min: 280
+                max: 600
+
+      - name: book
+        label: Book page
+        file: src/content/book.json
+        format: json
+        fields:
+          - { name: title, label: Title, widget: string }
+          - { name: intro, label: Intro, widget: text }
+          - { name: referencePhotos, label: Reference photos note, widget: text }
+          - { name: calLink, label: Cal.com booking link, widget: string, required: false, hint: "The part after https://cal.com/, for example gwadlas/consultation. Leave empty to show the placeholder." }
+          - { name: calPlaceholder, label: Calendar placeholder text, widget: string }
+          - { name: contactLabel, label: Contact heading, widget: string }
+          - { name: visitLabel, label: Visit heading, widget: string }
+          - { name: visitNote, label: Visit note, widget: string }

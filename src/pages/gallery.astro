@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Photo from '../components/Photo.astro';
+import gallery from '../content/gallery.json';
+import { photo, url } from '../lib/content';
+
+// Data the drawer script needs, serialised once.
+const pieces = gallery.pieces.map((p) => ({ ...p, img: photo(p.photo) }));
+---
+
+<BaseLayout title={gallery.title} description={gallery.intro}>
+  <section class="wrap flex flex-col gap-6 pt-10 pb-6 sm:pt-12 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <h1 class="m-0 mb-1.5 text-[32px] font-medium">{gallery.title}</h1>
+      <p class="muted m-0 text-sm">{gallery.intro}</p>
+    </div>
+    <div class="flex flex-wrap gap-1.5" role="group" aria-label="Filter by category">
+      {gallery.categories.map((c, i) => (
+        <button type="button" class="chip" data-filter={c} aria-pressed={i === 0 ? 'true' : 'false'}>{c}</button>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap columns-1 gap-4 sm:columns-2 lg:columns-3">
+    {pieces.map((p, i) => (
+      <button
+        type="button"
+        class="group mb-6 flex w-full cursor-pointer break-inside-avoid flex-col gap-2 border-0 bg-transparent p-0 text-left text-fg"
+        data-piece={i}
+        data-category={p.category}
+        aria-haspopup="dialog"
+        style={`--h:${p.height}px`}
+      >
+        <Photo name={p.photo} alt={p.title} rounded showCredit={false} class="tile-photo w-full" />
+        <span class="flex justify-between gap-3">
+          <span class="text-sm group-hover:text-accent">{p.title}</span>
+          <span class="text-xs text-neutral-500 whitespace-nowrap">{p.year} · from {p.price}</span>
+        </span>
+      </button>
+    ))}
+  </section>
+
+  <!-- Piece drawer (mockup 2d): slides in from the right; full screen on mobile -->
+  <dialog id="piece" class="m-0 ml-auto h-full max-h-none w-full max-w-[520px] bg-transparent p-0 text-fg backdrop:bg-neutral-900/80">
+    <div class="flex h-full flex-col gap-4 overflow-auto bg-surface p-6 shadow-[var(--shadow-lift)] sm:p-8">
+      <div class="flex items-center justify-between">
+        <span class="kicker" data-f="kicker"></span>
+        <form method="dialog"><button class="btn btn-icon" aria-label="Close"><i class="ph ph-x text-lg"></i></button></form>
+      </div>
+      <div class="photo rounded-lg h-[380px] sm:h-[480px] flex-none">
+        <img data-f="img" alt="" />
+        <a class="photo-credit" data-f="credit" target="_blank" rel="noopener"></a>
+      </div>
+      <h2 class="m-0 text-[25px]" data-f="title"></h2>
+      <p class="m-0 text-sm text-neutral-300 text-pretty" data-f="story"></p>
+      <dl class="m-0 grid grid-cols-[auto_1fr] gap-x-5 gap-y-1.5 text-[13px]">
+        <dt class="muted">Cloth</dt><dd class="m-0" data-f="cloth"></dd>
+        <dt class="muted">Fittings</dt><dd class="m-0" data-f="fittings"></dd>
+        <dt class="muted">Hours</dt><dd class="m-0" data-f="hours"></dd>
+      </dl>
+      <a href={url('/book')} class="btn btn-primary mt-auto py-3">Commission something like this</a>
+    </div>
+  </dialog>
+
+  <script is:inline type="application/json" id="pieces-data" set:html={JSON.stringify(pieces)} />
+</BaseLayout>
+
+<style is:global>
+  /* Varied tile heights from the mockup, scaled down on smaller screens. */
+  .tile-photo { height: calc(var(--h, 400px) * 0.8); }
+  @media (min-width: 1024px) { .tile-photo { height: var(--h, 400px); } }
+
+  #piece[open] { animation: slide-in 0.2s ease-out; }
+  @keyframes slide-in { from { transform: translateX(24px); opacity: 0; } }
+</style>
+
+<script>
+  type Piece = {
+    title: string; category: string; year: string; price: string; cloth: string;
+    fittings: number; hours: number; story: string; height: number;
+    img: { src: string; credit: string; href: string };
+  };
+
+  const pieces: Piece[] = JSON.parse(document.getElementById('pieces-data')!.textContent || '[]');
+  const dialog = document.getElementById('piece') as HTMLDialogElement;
+  const field = (name: string) => dialog.querySelector<HTMLElement>(`[data-f="${name}"]`)!;
+
+  // Filters
+  const chips = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const cat = chip.dataset.filter;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      document.querySelectorAll<HTMLElement>('[data-piece]').forEach((tile) => {
+        tile.hidden = cat !== 'All' && tile.dataset.category !== cat;
+      });
+    }),
+  );
+
+  // Drawer
+  document.querySelectorAll<HTMLButtonElement>('[data-piece]').forEach((tile) =>
+    tile.addEventListener('click', () => {
+      const p = pieces[Number(tile.dataset.piece)];
+      field('kicker').textContent = `${p.category} · ${p.year} · from ${p.price}`;
+      const img = field('img') as HTMLImageElement;
+      img.src = p.img.src;
+      img.alt = p.title;
+      const credit = field('credit') as HTMLAnchorElement;
+      credit.href = p.img.href;
+      credit.textContent = `Photo by ${p.img.credit} on Unsplash`;
+      credit.hidden = !p.img.credit;
+      field('title').textContent = p.title;
+      field('story').textContent = p.story;
+      field('cloth').textContent = p.cloth;
+      field('fittings').textContent = `${p.fittings} fittings`;
+      field('hours').textContent = `${p.hours} hours`;
+      dialog.showModal();
+    }),
+  );
+
+  // Close when clicking the backdrop.
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+</script>

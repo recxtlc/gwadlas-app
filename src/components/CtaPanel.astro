@@ -1,0 +1,17 @@
+---
+import home from '../content/home.json';
+import site from '../content/site.json';
+import { url } from '../lib/content';
+const { cta } = home;
+---
+
+<section class="wrap mt-24">
+  <div class="grid items-center gap-6 rounded-[14px] p-8 sm:p-12 md:grid-cols-[minmax(0,1fr)_auto] md:gap-12 bg-[radial-gradient(ellipse_70%_120%_at_0%_0%,var(--color-accent-900),var(--color-surface)_70%)]">
+    <div>
+      <h2 class="m-0 mb-2.5">{cta.title}</h2>
+      <p class="muted m-0 text-[15px] max-w-[460px]">{cta.body}</p>
+      <p class="muted mt-2 mb-0 text-[13px]">{site.contact.address}</p>
+    </div>
+    <a href={url('/book')} class="btn btn-primary btn-lg justify-self-start">{cta.button} <i class="ph ph-arrow-right"></i></a>
+  </div>
+</section>

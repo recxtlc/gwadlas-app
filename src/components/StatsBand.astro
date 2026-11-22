@@ -1,0 +1,16 @@
+---
+import home from '../content/home.json';
+const { stats } = home;
+---
+
+<section class="mt-24 bg-[radial-gradient(ellipse_60%_140%_at_15%_0%,var(--color-section-glow),var(--color-section)_70%)]">
+  <div class="wrap grid gap-8 py-14 sm:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-10 lg:items-end">
+    <h2 class="text-[28px] sm:col-span-3 lg:col-span-1 lg:text-4xl text-balance m-0">{stats.title}</h2>
+    {stats.items.map((s) => (
+      <div class="flex flex-col gap-1">
+        <span class="text-[40px] tracking-[-0.02em] leading-tight">{s.value}</span>
+        <span class="text-[13px] text-neutral-200">{s.label}</span>
+      </div>
+    ))}
+  </div>
+</section>

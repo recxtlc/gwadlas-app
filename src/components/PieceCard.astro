@@ -1,0 +1,15 @@
+---
+import Photo from './Photo.astro';
+import { url } from '../lib/content';
+
+interface Props {
+  piece: { title: string; photo: string; cloth: string };
+}
+const { piece } = Astro.props;
+---
+
+<a href={url('/gallery')} class="group flex flex-col gap-2.5 text-inherit no-underline">
+  <Photo name={piece.photo} alt={piece.title} class="h-[300px] sm:h-[360px]" />
+  <span class="text-[15px] group-hover:text-accent">{piece.title}</span>
+  <span class="text-xs text-neutral-500 -mt-1.5">{piece.cloth}</span>
+</a>

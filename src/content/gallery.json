@@ -1,0 +1,19 @@
+{
+  "title": "Gallery",
+  "intro": "Commissions shown with our clients’ permission. Prices are where each piece started.",
+  "categories": ["All", "Traditional", "Eveningwear", "Daywear", "Menswear"],
+  "pieces": [
+    { "title": "Umbhaco wedding ensemble", "category": "Traditional", "year": "2025", "price": "R 38,000", "photo": "/images/photo-00.jpg", "height": 560, "cloth": "Umbhaco cotton, black braid, hand beadwork", "fittings": 3, "hours": 160, "story": "Skirt, cape and isicholo-inspired headpiece for a Xhosa wedding; the bead colours follow the bride’s family." },
+    { "title": "Beaded-collar silk gown", "category": "Eveningwear", "year": "2025", "price": "R 29,500", "photo": "/images/photo-06.jpg", "height": 380, "cloth": "Silk crepe, glass-bead collar", "fittings": 4, "hours": 130, "story": "A bias-cut gown with a detachable beaded collar made by one of our Eastern Cape beadworkers." },
+    { "title": "Shweshwe A-line dress", "category": "Daywear", "year": "2024", "price": "R 6,800", "photo": "/images/photo-02.jpg", "height": 460, "cloth": "Indigo shweshwe, cotton lining", "fittings": 2, "hours": 40, "story": "Cut against the grain so the print runs diagonally across the bodice." },
+    { "title": "Wedding suit, beaded lapel", "category": "Menswear", "year": "2024", "price": "R 31,000", "photo": "/images/photo-10.jpg", "height": 520, "cloth": "Navy wool, hand-beaded lapel", "fittings": 3, "hours": 110, "story": "A two-piece for the groom with a lapel beaded to match the bride’s doek." },
+    { "title": "Doek & matching cape", "category": "Traditional", "year": "2024", "price": "R 7,200", "photo": "/images/photo-01.jpg", "height": 400, "cloth": "Shweshwe and silk", "fittings": 2, "hours": 30, "story": "A ready-to-wear-style doek pre-tied and stitched, with a short cape in the same cloth." },
+    { "title": "Shweshwe shirts", "category": "Menswear", "year": "2025", "price": "R 5,400", "photo": "/images/photo-13.jpg", "height": 340, "cloth": "Shweshwe, contrast collar", "fittings": 2, "hours": 24, "story": "A set of three, the collars faced in a second print." },
+    { "title": "Isishweshwe ball gown", "category": "Eveningwear", "year": "2023", "price": "R 14,500", "photo": "/images/photo-12.jpg", "height": 480, "cloth": "Brown shweshwe, petticoat net", "fittings": 3, "hours": 95, "story": "Full skirt, eight metres of cloth, made for a matric farewell." },
+    { "title": "Linen kaftan suit", "category": "Menswear", "year": "2023", "price": "R 9,800", "photo": "/images/photo-03.jpg", "height": 420, "cloth": "Natural linen, beaded placket", "fittings": 2, "hours": 50, "story": "Loose kaftan and trousers with a narrow line of beadwork at the neck." },
+    { "title": "Embroidered agbada", "category": "Menswear", "year": "2025", "price": "R 24,000", "photo": "/images/photo-08.jpg", "height": 500, "cloth": "Cotton damask, hand embroidery", "fittings": 3, "hours": 140, "story": "A three-piece agbada with the neck embroidery redrawn as a single continuous line." },
+    { "title": "Adire wide-leg set", "category": "Daywear", "year": "2025", "price": "R 8,900", "photo": "/images/photo-14.jpg", "height": 380, "cloth": "Indigo adire, hand-dyed", "fittings": 2, "hours": 36, "story": "Cropped jacket and wide trousers from resist-dyed cotton, each panel matched by hand." },
+    { "title": "Kente-lapel blazer", "category": "Menswear", "year": "2024", "price": "R 16,500", "photo": "/images/photo-05.jpg", "height": 440, "cloth": "Black wool, kente strip lapel", "fittings": 3, "hours": 70, "story": "A plain tailored blazer with the lapel cut from a single handwoven kente strip." },
+    { "title": "Kimono-sleeve kaftan", "category": "Eveningwear", "year": "2024", "price": "R 11,200", "photo": "/images/photo-07.jpg", "height": 520, "cloth": "Silk, raffia-trimmed hem", "fittings": 2, "hours": 48, "story": "A Dakar-style kaftan in yellow silk with a raffia fringe along the hem." }
+  ]
+}

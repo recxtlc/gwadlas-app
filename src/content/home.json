@@ -1,0 +1,30 @@
+{
+  "hero": {
+    "title": "One garment, designed for one person.",
+    "body": "Gwadlas is a bespoke house in Pretoria. Every piece starts on a blank page, often from shweshwe, umbhaco cloth or hand beadwork, and is drafted from your measurements and fitted on you.",
+    "mobileBody": "Made in Pretoria from your measurements. We ship worldwide.",
+    "cta": "Begin a commission",
+    "images": [
+      { "photo": "photo-00", "alt": "Finished garment on a dark ground" },
+      { "photo": "photo-06", "alt": "Beadwork detail" },
+      { "photo": "photo-13", "alt": "Shweshwe on the cutting table" }
+    ],
+    "mobileImage": { "photo": "photo-01", "alt": "Portrait in a Gwadlas commission" }
+  },
+  "processLabel": "The process",
+  "featuredLabel": "Recent commissions",
+  "featured": ["Umbhaco wedding ensemble", "Shweshwe A-line dress", "Wedding suit, beaded lapel"],
+  "stats": {
+    "title": "Everything is handmade in South Africa.",
+    "items": [
+      { "value": "100%", "label": "cut and sewn in our studio" },
+      { "value": "6", "label": "beadworkers we commission from" },
+      { "value": "40+", "label": "countries we’ve shipped to" }
+    ]
+  },
+  "cta": {
+    "title": "Begin with a conversation",
+    "body": "An hour at our studio or by video with one of our designers. No charge, no commitment.",
+    "button": "Book a consultation"
+  }
+}

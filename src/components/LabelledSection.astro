@@ -1,0 +1,15 @@
+---
+// A section with a small uppercase label on the left (desktop) or above (mobile),
+// matching the "The process" / "Recent commissions" rows in the mockup.
+interface Props {
+  label: string;
+  id?: string;
+  class?: string;
+}
+const { label, id, class: className = '' } = Astro.props;
+---
+
+<section id={id} class:list={['wrap grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-14', className]}>
+  <h2 class="eyebrow mt-1.5 !text-[13px] !tracking-[0.08em]">{label}</h2>
+  <div class="min-w-0"><slot /></div>
+</section>

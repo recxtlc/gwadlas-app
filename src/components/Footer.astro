@@ -1,0 +1,39 @@
+---
+import site from '../content/site.json';
+import { url } from '../lib/content';
+
+const { contact, footer } = site;
+const tel = contact.phone.replace(/[^\d+]/g, '');
+---
+
+<footer class="rule-fade mt-24">
+  <div class="wrap grid gap-8 py-10 text-[13px] text-neutral-400 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+    <div class="flex flex-col gap-1.5">
+      <a href={url('/')} class="wordmark text-[13px]">{site.wordmark}</a>
+      <span>{contact.address}</span>
+      <span>
+        <a href={`mailto:${contact.email}`} class="text-inherit no-underline hover:text-accent">{contact.email}</a>
+        {' · '}
+        <a href={`tel:${tel}`} class="text-inherit no-underline hover:text-accent">{contact.phone}</a>
+      </span>
+    </div>
+
+    {footer.columns.map((col) => (
+      <div class="flex flex-col gap-1.5">
+        <span class="text-fg">{col.title}</span>
+        {col.links.map((l) => (
+          <a href={url(l.href)} class="text-inherit no-underline hover:text-accent">{l.label}</a>
+        ))}
+      </div>
+    ))}
+
+    <div class="flex flex-col gap-2">
+      <span class="text-fg">Start a commission</span>
+      <a href={url('/book')} class="btn btn-primary self-start text-[13px]">{site.bookCta}</a>
+    </div>
+  </div>
+  <div class="wrap pb-10 text-[11px] text-neutral-600">
+    © {new Date().getFullYear()} {site.name}. {footer.note}
+    · <a href={url('/admin/')} class="text-inherit no-underline hover:text-accent" rel="nofollow">Edit site</a>
+  </div>
+</footer>

@@ -1,0 +1,27 @@
+{
+  "title": "Services",
+  "intro": "Everything we make is made to order. Start with a consultation; we quote once we know the design and the cloth.",
+  "process": [
+    { "n": "01", "title": "Consultation", "body": "An hour with a designer: what you need, how you live in your clothes." },
+    { "n": "02", "title": "Design", "body": "Sketches and cloth: shweshwe, umbhaco, silk or wool, with beadwork if you want it." },
+    { "n": "03", "title": "Pattern & fittings", "body": "A paper pattern from your measurements, then two or three fittings in calico and cloth." },
+    { "n": "04", "title": "Finishing", "body": "Sewn and beaded by hand in South Africa, then delivered or shipped worldwide." }
+  ],
+  "appointmentsLabel": "Ways to begin",
+  "appointments": [
+    { "icon": "ph-storefront", "title": "In the studio", "body": "An hour with a designer, cloth books on the table.", "duration": "60 minutes · free", "cta": "Choose a time" },
+    { "icon": "ph-video-camera", "title": "By video", "body": "For clients abroad. We send a measuring guide and fit on your visits to Pretoria.", "duration": "45 minutes · free", "cta": "Request a call" },
+    { "icon": "ph-house", "title": "For a ceremony", "body": "Weddings, umembeso and lobola: outfits for the whole family, coordinated.", "duration": "90 minutes · free", "cta": "Enquire" }
+  ],
+  "offeringsLabel": "What we make",
+  "offerings": [
+    { "title": "Traditional", "body": "Umbhaco, shweshwe and beadwork for weddings, umembeso and lobola, with bead colours chosen for your family.", "from": "R 7,200", "fittings": "2–3 fittings", "time": "30–160 hours of work" },
+    { "title": "Eveningwear", "body": "Gowns and kaftans in silk and shweshwe, with detachable beaded collars and hand-finished hems.", "from": "R 11,200", "fittings": "2–4 fittings", "time": "48–130 hours of work" },
+    { "title": "Daywear", "body": "Dresses and sets in indigo shweshwe and hand-dyed adire, cut to wear every day.", "from": "R 6,800", "fittings": "2 fittings", "time": "36–40 hours of work" },
+    { "title": "Menswear", "body": "Suits, agbada, kaftans and shirts, with beaded lapels or kente details where you want them.", "from": "R 5,400", "fittings": "2–3 fittings", "time": "24–140 hours of work" }
+  ],
+  "aftercare": {
+    "title": "Alterations",
+    "body": "Alterations are free for the first year, anywhere we ship."
+  }
+}

@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import book from '../content/book.json';
+import site from '../content/site.json';
+import services from '../content/services.json';
+
+const { contact } = site;
+const tel = contact.phone.replace(/[^\d+]/g, '');
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(contact.mapQuery)}&output=embed`;
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.mapQuery)}`;
+---
+
+<BaseLayout title="Book" description={book.intro}>
+  <section class="wrap pt-10 sm:pt-16">
+    <h1 class="m-0 text-[40px] leading-[1.02] tracking-[-0.03em] sm:text-[56px] lg:text-[72px] lg:leading-none">{book.title}</h1>
+    <p class="mt-5 mb-0 max-w-[620px] text-base text-neutral-300 text-pretty">{book.intro}</p>
+  </section>
+
+  <section class="wrap grid gap-4 pt-10 md:grid-cols-3">
+    {services.appointments.map((a) => (
+      <div class="flex items-start gap-3 rounded-lg p-4 shadow-[var(--shadow-hairline)]">
+        <i class={`ph ${a.icon} text-xl text-accent`} aria-hidden="true"></i>
+        <div class="flex flex-col gap-0.5">
+          <span class="text-[15px]">{a.title}</span>
+          <span class="text-xs text-neutral-400">{a.duration}</span>
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <!-- ============================================================
+       CAL.COM CALENDAR
+       Set "calLink" in src/content/book.json to your Cal.com booking
+       link without the https://cal.com/ part, e.g. "gwadlas/consultation".
+       While it is empty, the placeholder below shows instead.
+       ============================================================ -->
+  <section class="wrap pt-6">
+    <div
+      id="cal-embed"
+      data-cal-link={book.calLink || undefined}
+      class="min-h-[560px] rounded-[14px] bg-surface shadow-[var(--shadow-hairline)] overflow-hidden"
+    >
+      <div data-cal-placeholder class="flex h-full min-h-[560px] flex-col items-center justify-center gap-3 p-8 text-center">
+        <i class="ph ph-calendar-blank text-4xl text-accent" aria-hidden="true"></i>
+        <p class="m-0 text-lg">{book.calPlaceholder}</p>
+        <p class="muted m-0 max-w-[420px] text-sm">
+          Until then, email <a href={`mailto:${contact.email}`}>{contact.email}</a> or call
+          <a href={`tel:${tel}`}>{contact.phone}</a> to book.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap pt-6">
+    <div class="flex flex-col gap-3 rounded-[14px] p-6 shadow-[var(--shadow-hairline)] sm:flex-row sm:items-center sm:gap-5">
+      <i class="ph ph-images text-2xl text-accent" aria-hidden="true"></i>
+      <p class="m-0 flex-1 text-sm text-neutral-300 text-pretty">{book.referencePhotos}</p>
+      <a
+        href={`mailto:${contact.email}?subject=${encodeURIComponent('Reference photos for my consultation')}`}
+        class="btn btn-primary self-start sm:self-auto whitespace-nowrap"
+      >Email your photos</a>
+    </div>
+  </section>
+
+  <section id="visit" class="wrap grid gap-10 pt-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-14">
+    <div class="flex flex-col gap-8">
+      <div class="flex flex-col gap-3">
+        <h2 class="eyebrow m-0">{book.contactLabel}</h2>
+        <a href={`mailto:${contact.email}`} class="text-xl no-underline text-fg hover:text-accent">{contact.email}</a>
+        <a href={`tel:${tel}`} class="text-xl no-underline text-fg hover:text-accent">{contact.phone}</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h2 class="eyebrow m-0">{book.visitLabel}</h2>
+        <address class="not-italic text-[15px]">{contact.address}</address>
+        <ul class="m-0 flex flex-col gap-1 p-0 list-none text-[13px] text-neutral-400">
+          {contact.hours.map((h) => <li>{h}</li>)}
+        </ul>
+        <p class="m-0 text-[13px] text-neutral-400">{book.visitNote}</p>
+        <a href={mapLink} target="_blank" rel="noopener" class="btn btn-ghost self-start">Open in Google Maps <i class="ph ph-arrow-up-right"></i></a>
+      </div>
+    </div>
+    <div class="overflow-hidden rounded-[14px] shadow-[var(--shadow-hairline)]">
+      <iframe
+        title={`Map showing ${contact.address}`}
+        src={mapSrc}
+        class="block h-[360px] w-full border-0 lg:h-[440px] [filter:invert(0.9)_hue-rotate(200deg)_saturate(0.6)]"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Loads Cal.com's inline booking calendar when calLink is set in book.json.
+  // This is Cal.com's standard embed loader, written out so it runs from config.
+  const host = document.getElementById('cal-embed');
+  const calLink = host?.dataset.calLink;
+
+  if (host && calLink) {
+    type CalFn = ((...args: unknown[]) => void) & { q?: unknown[]; ns?: Record<string, CalFn>; loaded?: boolean };
+    const w = window as unknown as { Cal?: CalFn };
+    const push = (fn: CalFn, args: unknown) => (fn.q = fn.q || []).push(args);
+
+    w.Cal = w.Cal || (function (this: unknown, ...args: unknown[]) {
+      const cal = w.Cal!;
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        const s = document.createElement('script');
+        s.src = 'https://app.cal.com/embed/embed.js';
+        document.head.appendChild(s);
+        cal.loaded = true;
+      }
+      if (args[0] === 'init') {
+        const api = ((...a: unknown[]) => push(api, a)) as CalFn;
+        const namespace = args[1];
+        if (typeof namespace === 'string') {
+          cal.ns![namespace] = cal.ns![namespace] || api;
+          push(cal.ns![namespace], args);
+          push(cal, ['initNamespace', namespace]);
+        } else push(cal, args);
+        return;
+      }
+      push(cal, args);
+    } as CalFn);
+
+    host.querySelector('[data-cal-placeholder]')?.remove();
+    const Cal = w.Cal;
+    Cal('init', 'booking', { origin: 'https://cal.com' });
+    const ns = Cal.ns!.booking;
+    ns('inline', {
+      elementOrSelector: '#cal-embed',
+      calLink,
+      config: { layout: 'month_view', theme: 'dark' },
+    });
+    ns('ui', {
+      theme: 'dark',
+      layout: 'month_view',
+      // Hides Cal.com's side panel (host name, photo, event description);
+      // the page above already explains the appointment types.
+      hideEventTypeDetails: true,
+      cssVarsPerTheme: { dark: { 'cal-brand': '#9184d9' } },
+    });
+  }
+</script>

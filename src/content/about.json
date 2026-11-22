@@ -1,0 +1,21 @@
+{
+  "title": "The house",
+  "lead": "Nothing here exists until you ask for it.",
+  "story": [
+    "Gwadlas is a bespoke house in Pretoria. We don’t keep stock and we don’t make collections: every piece starts on a blank page, with a conversation about who it is for and where it will be worn.",
+    "We work mostly in South African cloth: indigo and brown shweshwe, umbhaco cotton with black braid, and glass beadwork from the Eastern Cape. We also draw on cloth and technique from across the continent: adire, kente, agbada embroidery and raffia.",
+    "Each garment is drafted from your measurements, fitted on you two to four times, and cut, sewn and beaded by hand in South Africa."
+  ],
+  "image": { "photo": "photo-14", "alt": "Hand-dyed adire set" },
+  "quote": {
+    "text": "My grandmother’s umbhaco skirt was the starting point. They kept her braid pattern and cut it into something I can wear to work.",
+    "attribution": "Client, umbhaco wrap dress, 2025"
+  },
+  "peopleLabel": "The people",
+  "people": [
+    { "name": "Ayanda Khumalo", "role": "Designer", "body": "Eveningwear and traditional commissions, from first sketch to final fitting.", "photo": "photo-11" },
+    { "name": "Lindiwe Mthembu", "role": "Designer", "body": "Tailoring and wedding suits, and the house’s beadwork commissions.", "photo": "photo-04" },
+    { "name": "Kagiso Phiri", "role": "Designer", "body": "Menswear, kaftans and daywear in shweshwe and linen.", "photo": "photo-09" }
+  ],
+  "makersNote": "Beadwork is commissioned from six beadworkers we work with in the Eastern Cape, including Lusikisiki."
+}

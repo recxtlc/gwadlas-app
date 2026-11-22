@@ -1,0 +1,22 @@
+---
+import { photo } from '../lib/content';
+
+interface Props {
+  name: string;
+  alt: string;
+  class?: string;
+  rounded?: boolean;
+  eager?: boolean;
+  showCredit?: boolean;
+}
+
+const { name, alt, class: className = '', rounded = false, eager = false, showCredit = true } = Astro.props;
+const p = photo(name);
+---
+
+<div class:list={['photo', rounded && 'rounded-lg', className]}>
+  <img src={p.src} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+  {showCredit && p.credit && (
+    <a class="photo-credit" href={p.href} target="_blank" rel="noopener">Photo by {p.credit} on Unsplash</a>
+  )}
+</div>

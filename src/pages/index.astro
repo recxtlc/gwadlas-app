@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Photo from '../components/Photo.astro';
+import LabelledSection from '../components/LabelledSection.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import PieceCard from '../components/PieceCard.astro';
+import StatsBand from '../components/StatsBand.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import home from '../content/home.json';
+import gallery from '../content/gallery.json';
+import { url } from '../lib/content';
+
+const { hero } = home;
+const featured = home.featured
+  .map((t) => gallery.pieces.find((p) => p.title === t))
+  .filter((p): p is (typeof gallery.pieces)[number] => Boolean(p));
+---
+
+<BaseLayout>
+  <!-- Mobile hero: portrait image first (mockup 2c) -->
+  <Photo name={hero.mobileImage.photo} alt={hero.mobileImage.alt} class="h-[440px] sm:hidden" eager />
+
+  <section class="wrap grid gap-5 pt-6 sm:pt-16 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-14 lg:items-end">
+    <h1 class="m-0 text-[40px] leading-[1.02] tracking-[-0.03em] sm:text-[64px] lg:text-[88px] lg:leading-[0.98] lg:tracking-[-0.035em] text-balance">
+      {hero.title}
+    </h1>
+    <div class="flex flex-col gap-4 lg:pb-2.5">
+      <p class="m-0 text-[15px] sm:text-base text-neutral-300 text-pretty">
+        <span class="sm:hidden">{hero.mobileBody}</span>
+        <span class="hidden sm:inline">{hero.body}</span>
+      </p>
+      <a href={url('/book')} class="btn btn-primary btn-lg sm:hidden">Book a consultation</a>
+      <a href={url('/book')} class="btn btn-ghost hidden sm:inline-flex self-start text-[15px]">{hero.cta} <i class="ph ph-arrow-right"></i></a>
+    </div>
+  </section>
+
+  <!-- Desktop/tablet hero images (mockup 2a) -->
+  <section class="wrap hidden sm:grid gap-4 pt-14 grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+    <Photo name={hero.images[0].photo} alt={hero.images[0].alt} class="h-[420px] lg:h-[560px]" eager />
+    <div class="grid grid-rows-2 gap-4">
+      <Photo name={hero.images[1].photo} alt={hero.images[1].alt} />
+      <Photo name={hero.images[2].photo} alt={hero.images[2].alt} />
+    </div>
+  </section>
+
+  <LabelledSection label={home.processLabel} id="process" class="pt-16 lg:pt-[88px]">
+    <ProcessSteps />
+  </LabelledSection>
+
+  <LabelledSection label={home.featuredLabel} class="pt-16 lg:pt-24">
+    <div class="-mx-5 flex gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0">
+      {featured.map((p) => (
+        <div class="w-[220px] flex-none sm:w-auto"><PieceCard piece={p} /></div>
+      ))}
+    </div>
+  </LabelledSection>
+
+  <StatsBand />
+  <CtaPanel />
+</BaseLayout>

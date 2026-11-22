@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LabelledSection from '../components/LabelledSection.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import services from '../content/services.json';
+import { url } from '../lib/content';
+---
+
+<BaseLayout title="Services" description={services.intro}>
+  <section class="wrap pt-10 sm:pt-16">
+    <h1 class="m-0 text-[40px] leading-[1.02] tracking-[-0.03em] sm:text-[56px] lg:text-[72px] lg:leading-none">{services.title}</h1>
+    <p class="mt-5 mb-0 max-w-[620px] text-base text-neutral-300 text-pretty">{services.intro}</p>
+  </section>
+
+  <LabelledSection label={services.appointmentsLabel} class="pt-16 lg:pt-20">
+    <div class="grid gap-4 md:grid-cols-3">
+      {services.appointments.map((a) => (
+        <div class="card">
+          <i class={`ph ${a.icon} text-[22px] text-accent`} aria-hidden="true"></i>
+          <span class="text-[17px] leading-tight">{a.title}</span>
+          <p class="m-0 flex-1 text-[13px] opacity-80">{a.body}</p>
+          <span class="text-xs text-neutral-400">{a.duration}</span>
+          <a href={url('/book')} class="btn btn-ghost self-start">{a.cta} <i class="ph ph-arrow-right"></i></a>
+        </div>
+      ))}
+    </div>
+  </LabelledSection>
+
+  <LabelledSection label={services.offeringsLabel} class="pt-16 lg:pt-24">
+    <ul class="grid gap-x-10 sm:grid-cols-2">
+      {services.offerings.map((o) => (
+        <li class="rule-fade flex flex-col gap-2 py-6">
+          <div class="flex items-baseline justify-between gap-4">
+            <span class="text-xl">{o.title}</span>
+            <span class="text-sm text-accent whitespace-nowrap">from {o.from}</span>
+          </div>
+          <p class="m-0 text-[13px] text-neutral-400 text-pretty">{o.body}</p>
+          <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-neutral-500">
+            <span>{o.fittings}</span><span>{o.time}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </LabelledSection>
+
+  <LabelledSection label="The process" class="pt-16 lg:pt-24">
+    <ProcessSteps />
+  </LabelledSection>
+
+  <LabelledSection label={services.aftercare.title} class="pt-16 lg:pt-24">
+    <p class="m-0 text-2xl tracking-[-0.015em] text-pretty">{services.aftercare.body}</p>
+  </LabelledSection>
+
+  <CtaPanel />
+</BaseLayout>

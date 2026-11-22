@@ -1,0 +1,78 @@
+---
+import site from '../content/site.json';
+import { url, isCurrent } from '../lib/content';
+
+interface Props {
+  /** Lay the header over a full-bleed image instead of the page ground. */
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+const path = Astro.url.pathname;
+---
+
+<div class="bg-surface text-neutral-300 text-xs text-center px-4 py-2">{site.announcement}</div>
+
+<header class:list={['sticky top-0 z-40', overlay ? 'bg-ground/80 backdrop-blur' : 'bg-ground/90 backdrop-blur']}>
+  <nav class="wrap flex items-center gap-7 py-4 lg:py-[22px]" aria-label="Main">
+    <a href={url('/')} class="wordmark mr-auto">{site.wordmark}</a>
+
+    <ul class="hidden md:flex items-center gap-7 text-sm">
+      {site.nav.filter((n) => n.href !== '/').map((n) => (
+        <li>
+          <a
+            href={url(n.href)}
+            aria-current={isCurrent(path, n.href) ? 'page' : undefined}
+            class="text-fg no-underline hover:text-accent aria-[current=page]:text-accent"
+          >{n.label}</a>
+        </li>
+      ))}
+    </ul>
+    <a href={url('/book')} class="btn btn-primary hidden md:inline-flex text-[13px]">{site.bookCta}</a>
+
+    <button
+      type="button"
+      class="btn btn-icon md:hidden -mr-2"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-toggle
+    >
+      <i class="ph ph-list text-[22px]" data-menu-icon></i>
+    </button>
+  </nav>
+</header>
+
+<!-- Outside <header>: its backdrop blur would otherwise trap this fixed panel inside the header box. -->
+<div id="mobile-menu" class="md:hidden hidden fixed inset-x-0 top-[var(--menu-top,96px)] bottom-0 z-40 bg-ground px-5 pb-10 pt-6 flex-col gap-1.5" data-menu>
+    {site.nav.map((n) => (
+      <a
+        href={url(n.href)}
+        aria-current={isCurrent(path, n.href) ? 'page' : undefined}
+        class="text-[32px] tracking-[-0.02em] text-fg no-underline py-2.5 aria-[current=page]:text-accent"
+      >{n.label}</a>
+    ))}
+    <a href={url('/book')} class="btn btn-primary mt-auto py-3.5 text-[15px]">{site.bookCta}</a>
+</div>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const icon = document.querySelector<HTMLElement>('[data-menu-icon]');
+
+  function setOpen(open: boolean) {
+    if (!toggle || !menu || !icon) return;
+    const header = toggle.closest('header');
+    if (header) menu.style.setProperty('--menu-top', `${header.getBoundingClientRect().bottom}px`);
+    menu.classList.toggle('hidden', !open);
+    menu.classList.toggle('flex', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    icon.className = `ph ${open ? 'ph-x' : 'ph-list'} text-[22px]`;
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => { if (e.matches) setOpen(false); });
+</script>
